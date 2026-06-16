@@ -36,6 +36,14 @@ public class EventoDAO {
         System.out.println("Evento salvato con sucesso nel dataBase!" + " " +  newEvento);
     }
 
+    //metodo findyById
+
+    public Eventi findById(long idEvento){
+        Eventi evento= this.entityManager.find(Eventi.class, idEvento);
+
+        System.out.println("Evento salvato con successo nel dataBase!" + evento);
+        return  evento;
+    }
 
 
 }

@@ -60,17 +60,21 @@ EntityManager em=entityManagerFactory.createEntityManager();
         } catch (Exception e){
             System.out.println("Impossibile eseguire il salvataggio");
         }
-
-
-
-
-
-
-
-
-
-
+        //findbyid
+        try{
+            System.out.println("------------RICERCA IN CORSO------------");
+            Eventi eventoTrovato= eventoDAO.findById(1);
+            if(eventoTrovato!=null){
+                System.out.println("Evento trovato con successo" + " " +eventoTrovato.toString());
+            } else {
+                System.out.println("Evento trovato non trovato");
+            }
+        } catch(Exception e){
+            System.out.println("Impossibile eseguire il salvataggio");
+        }
 
 
     }
+
+
 }
