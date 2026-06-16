@@ -2,6 +2,7 @@ package org.example;
 import entities.Eventi;
 import entities.EventoDAO;
 import entities.TipoEvento;
+import exception.ErroreSalvataggio;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -70,7 +71,7 @@ EntityManager em=entityManagerFactory.createEntityManager();
                 System.out.println("Evento trovato non trovato");
             }
         } catch(Exception e){
-            System.out.println("Impossibile eseguire il salvataggio");
+            throw new ErroreSalvataggio("Impossibile eseguire il salvataggio");
         }
 
 //elimina evento
