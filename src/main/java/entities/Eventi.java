@@ -34,14 +34,23 @@ public class Eventi {
     @Column(name= "max_numero_partecipanti")
     private int numeroMassimoPartecipanti;
 
+
+    //Molti eventi possono avere la stessa location
+    @ManyToOne
+    @JoinColumn(name = "location_id", nullable = false) //mi riferisco alla location id della tabella eventi.
+    private Location location;
+
+
+
     //creo il costruttore della classe, ma non gli passo l'id perchè sarà automaticmanete generato dal DB
-    public Eventi( String titolo, LocalDate dataEvento, String descrizione, TipoEvento tipoEvento, int numeroMassimoPartecipanti) {
+    public Eventi( String titolo, Location location, LocalDate dataEvento, String descrizione, TipoEvento tipoEvento, int numeroMassimoPartecipanti) {
 
         this.titolo = titolo;
         this.dataEvento = dataEvento;
         this.descrizione = descrizione;
         this.tipoEvento = tipoEvento;
         this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
+        this.location = location;
     }
 
     //definisco i getter e i setter per la classe
@@ -87,6 +96,12 @@ public class Eventi {
     public void setNumeroMassimoPartecipanti(int numeroMassimoPartecipanti) {
         this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
     }
+   public Location getLocation() {
+        return location;
+   }
+    public void setLocation( Location location) {
+        this.location = location;
+    }
 
     //Istanzio il costruttore vuoto che serve ad hibernate
     public Eventi() {}
@@ -98,8 +113,9 @@ public class Eventi {
         sb.append(", titolo='").append(titolo).append('\'');
         sb.append(", dataEvento=").append(dataEvento);
         sb.append(", descrizione='").append(descrizione).append('\'');
-        sb.append(", tipoEvento='").append(tipoEvento).append('\'');
+        sb.append(", tipoEvento=").append(tipoEvento);
         sb.append(", numeroMassimoPartecipanti=").append(numeroMassimoPartecipanti);
+        sb.append(", location=").append(location);
         sb.append('}');
         return sb.toString();
     }
