@@ -1,7 +1,5 @@
 package org.example;
-import entities.Eventi;
-import entities.EventoDAO;
-import entities.TipoEvento;
+import entities.*;
 import exception.ErroreSalvataggio;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -22,82 +20,38 @@ EntityManager em=entityManagerFactory.createEntityManager();
 //creo oggetto new dao e gli passo l'entitymanager
 
        EventoDAO eventoDAO=new EventoDAO(em);  //ora ho collegato eventodao e sa cosa fare perchè gli ho passao l'EntityM.
-
+LocationDAO locationDAO=new LocationDAO(em);
+Partecipazione partecipazione=new Partecipazione();
+PersonaDAO personaDAO=new PersonaDAO(em);
 //ora creo prima gli eventi
 
-        Eventi concertoG=new Eventi(
+        System.out.println("--------------------SALVATAGGIO IN CORSO-------------------");
+
+Location stadioSanSiro=new Location("San Siro", "Milano");
+Persona Emanuela =new Persona("Emanuela", "Carrubba", "emanuela_carrubba_@hotmail.com", LocalDate.of(1998, 8, 25), "F");
+        Eventi concerto1 = new Eventi(
                 "Milano Summer Festival",
+                stadioSanSiro, // <--- Ecco la nostra location passata correttamente
                 LocalDate.of(2026, 7, 15),
                 "Ghali live nel cuore di Milano",
                 TipoEvento.PUBBLICO,
                 15000
         );
+Partecipazione biglietto1 = new Partecipazione(Emanuela, concerto1, StatoPartecipazione.CONFERMATA);
+PartecipazioneDAO partecipazioneDAO=new PartecipazioneDAO(em);
 
-        Eventi congresso2= new Eventi(
-                "Java Tech Conference",
-                LocalDate.of(2026, 9, 22),
-                "Conferenza annuale sulle novità di Hibernate",
-                TipoEvento.PUBBLICO,
-                350
-        );
+        System.out.println("-------------------- SALVATAGGIO IN CORSO SUL DB -------------------");
 
-        Eventi gala3= new Eventi(
-                "Gala Aziendale Private",
-                LocalDate.of(2026, 12, 18),
-                "Cena di gala riservata esclusivamente ai dipendenti",
-                TipoEvento.PRIVATO,
-                120
-        );
+        locationDAO.save(stadioSanSiro);
+        personaDAO.save(Emanuela);
+        eventoDAO.salvaEvento(concerto1);
+        partecipazioneDAO.save(biglietto1);
 
-        Eventi gala4= new Eventi(
-                "Prima film",
-                LocalDate.of(2026, 7, 18),
-                "Cinema",
-                TipoEvento.PUBBLICO,
-                60
-        );
-        System.out.println("----------------SALVATAGGIO IN CORSO------------------");
+        System.out.println("Salvataggi inviati al DB con successo!");
 
 
-        //ora richiamo il metodo per salvare i dati con un controllo
-
-        try{
-            eventoDAO.salvaEvento(concertoG);
-            eventoDAO.salvaEvento(congresso2);
-            eventoDAO.salvaEvento(gala3);
-            eventoDAO.salvaEvento(gala4);
-            System.out.println("Salvataggio eseguito con successo!");
-        } catch (Exception e){
-            System.out.println("Impossibile eseguire il salvataggio");
-        }
-        //findbyid
-        try{
-            System.out.println("------------RICERCA IN CORSO------------");
-            Eventi eventoTrovato= eventoDAO.findById(1);
-            if(eventoTrovato!=null){
-                System.out.println("Evento trovato con successo" + " " +eventoTrovato.toString());
-            } else {
-                System.out.println("Evento trovato non trovato");
-            }
-        } catch(Exception e){
-            throw new ErroreSalvataggio("Impossibile eseguire il salvataggio");
-        }
-
-//elimina evento
-
-        System.out.println("----------------ELIMINAZIONE IN CORSO...-----------------");
-        try{
-            Eventi eventodaEliminare =eventoDAO.eliminaEvento(2);
-            if(eventodaEliminare!=null){
-                System.out.println("Evento eliminato con successo" + " " +eventodaEliminare.toString());
-            } else  {
-                System.out.println("Evento da eliminare non trovato");
-            };
-        }catch(Exception e){
-            System.out.println("Impossibile eseguire il salvataggio");
-        }
-
-    }
 
 
-}
+
+
+    }};

@@ -24,7 +24,7 @@ public class Persona {
     //lista partecipazioni, considerato il diagramma ha un rapporto One To Many
     //perchè una persona può partecipare a piu eventi
     // quindi devo istanziare OneToMany
-    @OneToMany(mappedBy = "persona_id") //fa riferimento a persona_id nella classe Partecipazione
+    @OneToMany(mappedBy = "persona") //fa riferimento a persona_id nella classe Partecipazione
     private List<Partecipazione> listaPartecipazioni;
 
 
