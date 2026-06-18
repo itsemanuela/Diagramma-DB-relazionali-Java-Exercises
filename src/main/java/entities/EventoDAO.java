@@ -1,6 +1,9 @@
 package entities;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 public class EventoDAO {
     private final EntityManager entityManager;
@@ -56,5 +59,19 @@ public class EventoDAO {
         return  evento;
     }
 
+
+    //metodo getConcertiInStreaming ritorna un booleano
+   // questo metodo interroga la classe concerto, concerto è in streaming?
+    //tornami true o false
+
+    public List<Concerto> getConcertinStreaming(boolean in_streaming){
+
+        TypedQuery<Concerto> query= this.entityManager.createQuery("SELECT c FROM Concerto c WHERE c.in_streaming = :status", Concerto.class);
+
+        query.setParameter("status", in_streaming);
+        System.out.println("Concerto lista con successo nel dataBase!" + query.getResultList());
+        return query.getResultList();
+
+    }
 
 }

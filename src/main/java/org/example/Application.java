@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Application {
 
@@ -40,88 +41,64 @@ Persona Emanuela =new Persona("Emanuela", "Carrubba", "emanuela_carrubba_@hotmai
         Persona persona5 = new Persona("Alessandro", "Ferrari", "a.ferrari@gmail.com", LocalDate.of(1992, 8, 30), "M");
 
 
+// crea evento
+
+           Concerto concerto1=new Concerto(
+                   "Milano Summer Festival",
+                   stadioSanSiro,
+                   LocalDate.of(2026, 7, 15),
+                   "Ghali live nel cuore di Milano",
+                   TipoEvento.PUBBLICO,
+                   15000,
+                    GenereConcerto.POP,
+                   true
+           );
+
+           PartitaCalcio partitaCalcio=new PartitaCalcio(
+                   "Partita del Cuore 2026",
+                   stadioMaradona,
+                   LocalDate.of(2026, 9, 12),
+                   "Incontro calcistico di beneficenza tra artisti e campioni dello sport",
+                   TipoEvento.PRIVATO,
+                   40000,
+                   "Nazionale Cantanti",
+                   "Campioni dello Sport",
+                   "Nazionale Cantanti",
+                   3,
+                   2
+           );
+
+            GaraAtletica garaCentoMetri = new GaraAtletica(
+                    "Finale 100m Live",
+                    circoMassimo,
+                    LocalDate.of(2026, 7, 8),
+                    "Gara di velocità con i migliori atleti internazionali",
+                    TipoEvento.PUBBLICO,
+                    20000,
+                    "Tortu, Jacobs, Bolt, Gatlin",
+                    "Jacobs"
+            );
 
 
-        Eventi concerto1 = new Eventi(
-                "Milano Summer Festival",
-                stadioSanSiro, // <--- Ecco la nostra location passata correttamente
-                LocalDate.of(2026, 7, 15),
-                "Ghali live nel cuore di Milano",
-                TipoEvento.PUBBLICO,
-                15000
-        );
+locationDAO.save(stadioSanSiro);
+eventoDAO.salvaEvento(concerto1);
+personaDAO.save(persona1);
 
 
-        Eventi concertoNapoli = new Eventi(
-                "Geolier Live Tour",
-                stadioMaradona,
-                LocalDate.of(2026, 6, 28),
-                "Il re del rap napoletano in concerto nello stadio della sua città",
-                TipoEvento.PUBBLICO,
-                55000
-        );
+            System.out.println("-------------------- TEST QUERY JPQL -------------------");
+            List<Concerto> concertiInStreaming = eventoDAO.getConcertinStreaming(true);
 
+//  controllo: se la lista non è vuota, la stampo elemento per elemento
+            if (concertiInStreaming.isEmpty()) {
+                    System.out.println("Nessun concerto in streaming trovato nel Database.");
+            } else {
+                    System.out.println("Ecco la lista dei concerti in streaming trovati (" + concertiInStreaming.size() + "):");
 
-        Eventi rockInRoma = new Eventi(
-                "Rock in Roma - Green Day",
-                circoMassimo,
-                LocalDate.of(2026, 7, 8),
-                "La band punk-rock americana storica fa tappa nella capitale",
-                TipoEvento.PUBBLICO,
-                70000
-        );
-
-
-        Eventi partitaBeneficenza = new Eventi(
-                "Partita del Cuore 2026",
-                stadioMaradona,
-                LocalDate.of(2026, 9, 12),
-                "Incontro calcistico di beneficenza tra artisti e campioni dello sport",
-                TipoEvento.PRIVATO,
-                40000
-        );
-
-        Eventi concertoPop = new Eventi(
-                "Lazza Winter Tour",
-                stadioSanSiro, // <--- Usiamo lo stadio che hai già creato tu!
-                LocalDate.of(2026, 11, 20),
-                "Tappa speciale nei palazzetti e stadi per il tour invernale",
-                TipoEvento.PUBBLICO,
-                60000
-        );
-
-
-
-Partecipazione biglietto1 = new Partecipazione(Emanuela, concerto1, StatoPartecipazione.CONFERMATA);
-PartecipazioneDAO partecipazioneDAO=new PartecipazioneDAO(em);
-
-        System.out.println("-------------------- SALVATAGGIO IN CORSO SUL DB -------------------");
-
-        locationDAO.save(stadioSanSiro);
-        personaDAO.save(Emanuela);
-        eventoDAO.salvaEvento(concerto1);
-        partecipazioneDAO.save(biglietto1);
-        locationDAO.save(stadioMaradona);
-        locationDAO.save(circoMassimo);
-//salva eventi
-        eventoDAO.salvaEvento(concertoNapoli);
-        eventoDAO.salvaEvento(rockInRoma);
-        eventoDAO.salvaEvento(partitaBeneficenza);
-        eventoDAO.salvaEvento(concertoPop);
-
-        //salva persone
-        personaDAO.save(Emanuela);
-        personaDAO.save(persona1);
-        personaDAO.save(persona2);
-        personaDAO.save(persona3);
-        personaDAO.save(persona4);
-        personaDAO.save(persona5);
-
-
-        System.out.println("Salvataggi inviati al DB con successo!");
-
-
-
+                    // Ciclo for-each per stampare i dettagli di ogni concerto
+                    for (Concerto c : concertiInStreaming) {
+                            System.out.println("-> Titolo: " + c.getTitolo() + "Descrizione: " + c.getDescrizione() +" | Genere: " + c.getGenereConcerto() + " | Data: " + c.getDataEvento());
+                    }
+            }
 
 
 
