@@ -11,6 +11,7 @@
         <class>entities.Partecipazione</class>
         <class>entities.Persona</class>
 <class>entities.PartitaCalcio</class>
+        <class>entities.GaraAtletica</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/progetto_db"/>
