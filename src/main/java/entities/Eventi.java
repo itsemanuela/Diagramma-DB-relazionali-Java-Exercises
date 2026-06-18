@@ -37,7 +37,7 @@ public abstract class Eventi {
 
 
     //Molti eventi possono avere la stessa location
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "location_id", nullable = false) //mi riferisco alla location id della tabella eventi.
     private Location location;
 

@@ -14,7 +14,7 @@ public class Partecipazione {
 
     //qua collego verso più partecipazioni a una persona, quindi rapporto ManyToOne e gli passo oggetto persona
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "persona_id", nullable = false)
     //praticamente sto dicendo a db di creare il collegamento tra tabella persona e tabella partecipazione
     private Persona persona;

@@ -74,4 +74,13 @@ public class EventoDAO {
 
     }
 
+
+    //metodo getConcerti per genere
+
+    public List<Concerto> getConcertiPerGenere(GenereConcerto genereConcerto){
+        TypedQuery<Concerto> query= this.entityManager.createQuery("SELECT c FROM Concerto c WHERE c.genereConcerto = :genereConcerto" , Concerto.class);
+        query.setParameter("genereConcerto", genereConcerto);
+        System.out.println("Ecco la lista dei concerti per genere" +  genereConcerto);
+        return query.getResultList();
+    }
 }
