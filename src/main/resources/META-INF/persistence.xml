@@ -10,7 +10,7 @@
         <class>entities.Location</class>
         <class>entities.Partecipazione</class>
         <class>entities.Persona</class>
-
+<class>entities.PartitaCalcio</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/progetto_db"/>

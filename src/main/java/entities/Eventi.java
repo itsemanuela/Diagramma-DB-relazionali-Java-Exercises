@@ -11,7 +11,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name= "Eventi")
-public class Eventi {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Eventi {
     //Definisco, quindi la PrimariKey @id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
